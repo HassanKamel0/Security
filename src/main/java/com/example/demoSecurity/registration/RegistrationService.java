@@ -35,7 +35,7 @@ public class RegistrationService {
             if (user.getEnabled())
                 throw new IllegalStateException("Email already taken");
             else
-                token = appUserService.signUpUser(user);
+                token = appUserService.activateUser(user);
         }
         else {
             token = appUserService.signUpUser(

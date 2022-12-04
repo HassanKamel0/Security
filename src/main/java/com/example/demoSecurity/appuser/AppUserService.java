@@ -1,7 +1,4 @@
 package com.example.demoSecurity.appuser;
-
-import com.example.demoSecurity.registration.RegistrationRequest;
-import com.example.demoSecurity.registration.RegistrationService;
 import com.example.demoSecurity.registration.token.ConfirmationToken;
 import com.example.demoSecurity.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -31,9 +28,17 @@ public class AppUserService implements UserDetailsService {
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG,email)));
     }
+    public String activateUser(AppUser appUser){
+        String token = sendConfirmationMail(appUser);
+        return token;
+    }
     public String signUpUser(AppUser appUser){
         String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
+        String token = sendConfirmationMail(appUser);
+        return token;
+    }
+    private String sendConfirmationMail(AppUser appUser) {
         appUserRepository.save(appUser);
         String token=UUID.randomUUID().toString();
         ConfirmationToken confirmationToken=new ConfirmationToken(
@@ -45,7 +50,6 @@ public class AppUserService implements UserDetailsService {
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         return token;
     }
-
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
     }
