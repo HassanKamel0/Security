@@ -3,6 +3,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import java.util.Collections;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
+
 public class AppUser  implements UserDetails {
     @SequenceGenerator(name = "student_sequence",
             sequenceName = "student_sequence",
@@ -28,6 +30,7 @@ public class AppUser  implements UserDetails {
     private String lastName;
     private String email;
     private String password;
+    private int score=0;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
     private Boolean locked=false;
@@ -49,7 +52,6 @@ public class AppUser  implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority=
                 new SimpleGrantedAuthority(appUserRole.name());
-
         return Collections.singletonList(authority);
     }
 

@@ -1,10 +1,8 @@
 package com.example.demoSecurity.registration.token;
-
 import com.example.demoSecurity.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 @Getter
