@@ -25,7 +25,6 @@ public class RegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
     public String register(RegistrationRequest request) {
-
         boolean isValidEmail= emailValidator.test(request.getEmail());
         if (!isValidEmail){ throw new IllegalStateException("Email is not valid");}
         boolean userExists=appUserRepository.findByEmail(request.getEmail()).isPresent();
@@ -48,7 +47,7 @@ public class RegistrationService {
                     )
             );
         }
-        String link="http://localhost:8080/api/v1/registration/confirm?token="+token;
+        String link="http://localhost:8080/api/v1/security/confirm?token="+token;
         emailSender.send(request.getEmail(),buildEmail(request.getFirstName(),link));
         return token;
     }
@@ -68,7 +67,13 @@ public class RegistrationService {
         appUserService.enableAppUser(confirmationToken.getAppUser().getEmail());
         return "Confirmed";
     }
-
+    public String login(LoginRequest request) {
+        AppUser appUser=appUserRepository.findByEmail(request.getEmail()).get();
+        if (appUserRepository.existsById(appUser.getId()))
+            return "Login Done";
+        else
+            throw new IllegalStateException("You have to register first");
+    }
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
@@ -137,4 +142,6 @@ public class RegistrationService {
                 "\n" +
                 "</div></div>";
     }
+
+
 }

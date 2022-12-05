@@ -1,4 +1,5 @@
 package com.example.demoSecurity.appuser;
+import com.example.demoSecurity.gaming.GamesService;
 import com.example.demoSecurity.registration.token.ConfirmationToken;
 import com.example.demoSecurity.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,12 @@ public class AppUserService implements UserDetailsService {
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    private final GamesService gamesService;
     private final AppUserRepository appUserRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        var appUser= appUserRepository.findByEmail(email).get();
+        gamesService.setAppUserId(appUser.getId());
         return appUserRepository.findByEmail(email)
                 .orElseThrow(()->
                         new UsernameNotFoundException(
