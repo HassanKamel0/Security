@@ -5,6 +5,7 @@ import com.example.demoSecurity.appuser.AppUserRepository;
 import com.example.demoSecurity.appuser.AppUserRole;
 import com.example.demoSecurity.appuser.AppUserService;
 import com.example.demoSecurity.email.EmailSender;
+import com.example.demoSecurity.gaming.GamesService;
 import com.example.demoSecurity.registration.token.ConfirmationToken;
 import com.example.demoSecurity.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class RegistrationService {
     @Autowired
     private final AppUserService appUserService;
+    private final GamesService gamesService;
     private final AppUserRepository appUserRepository;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
@@ -69,8 +71,10 @@ public class RegistrationService {
     }
     public String login(LoginRequest request) {
         AppUser appUser=appUserRepository.findByEmail(request.getEmail()).get();
-        if (appUserRepository.existsById(appUser.getId()))
+        if (appUserRepository.existsById(appUser.getId())) {
+            gamesService.setAppUserId(appUser.getId());
             return "Login Done";
+        }
         else
             throw new IllegalStateException("You have to register first");
     }

@@ -22,18 +22,27 @@ public class GamesController {
     }
     @PostMapping(path = "/pokemon")
     public int playPokemon(String player1,String player2,int myPower,int hisDefence){
-        int result=gamesService.playPokemon(player1,player2,myPower,hisDefence);
-        if (result<100){
+        int damage=gamesService.playPokemon(player1,player2,myPower,hisDefence);
+        if (damage<100){
             var appUser=appUserRepository.findById(gamesService.getAppUserId()).get();
-            appUser.setScore(appUser.getScore()+1);
+            appUser.setScore(appUser.getScore()+50);
             appUserRepository.save(appUser);
         }
-        return result;
+        return damage;
     }
     @GetMapping(path = "/diceScore")
-    public int playDiceScore(int[] diceNumbers){return gamesService.playDice(diceNumbers);}
+    public int playDiceScore(int[] diceNumbers){
+        var appUser=appUserRepository.findById(gamesService.getAppUserId()).get();
+        int score=gamesService.playDice(diceNumbers);
+        appUser.setScore(appUser.getScore()+score);
+        appUserRepository.save(appUser);
+        return score;}
     @GetMapping(path = "/towerOfHanoi")
     public int playTowerOfHanoi(int disks){
-        return gamesService.playTowerOfHanoi(disks);
+        var appUser=appUserRepository.findById(gamesService.getAppUserId()).get();
+        int score=gamesService.playTowerOfHanoi(disks);
+        appUser.setScore(appUser.getScore()+score);
+        appUserRepository.save(appUser);
+        return score;
     }
 }
