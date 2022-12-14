@@ -4,7 +4,6 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 import java.util.Random;
 import static java.lang.Math.pow;
-
 @Service
 @Getter
 @Setter
@@ -46,7 +45,6 @@ public class GamesService {
             effectiveness=1;
         }
         else {
-
             if (player1.equals("fire"))
                 effectiveness = (player2.equals("grass")) ? 2 : (player2.equals("water")) ? 0.5 : 1;
             else if (player1.equals("water"))
