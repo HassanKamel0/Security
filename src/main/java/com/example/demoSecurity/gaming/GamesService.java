@@ -58,11 +58,9 @@ public class GamesService {
     }
     public String playRockPaperScissors(int choice) {
         String result = "";
-        Random random = new Random();
         String[] options = {"Rock", "Paper", "Scissors"};
         String player = options[choice - 1];
-        int randomIndex = random.nextInt(options.length);
-        String pc = options[randomIndex];
+        String pc = options[new Random().nextInt(options.length)];
         if (player == pc)
             return "It's a draw";
         else if (player == "Rock")

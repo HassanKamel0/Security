@@ -6,7 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class GamesServiceTest {
@@ -22,7 +27,6 @@ class GamesServiceTest {
         assertEquals(1150,gamesService.playDice(new int[]{1,1,1,1,5}));
         assertEquals(300,gamesService.playDice(new int[]{3,3,3,3,3}));
     }
-
     @Test
     void playPokemon() {
         assertEquals(25,gamesService.playPokemon("fire", "water", 100, 100));
@@ -34,8 +38,26 @@ class GamesServiceTest {
     }
     @Test
     void playRockPaperScissors() {
-    }
+        String[] options = {"Rock", "Paper", "Scissors"};
+        String pc = options[new Random().nextInt(options.length)];
+        given(options[new Random().nextInt(options.length)]).willReturn(pc);
+        if (pc.equals("Rock")) {
+            assertEquals("It's a draw", gamesService.playRockPaperScissors(1));
+            assertEquals("The winner is PC", gamesService.playRockPaperScissors(2));
+            assertEquals("The winner is Player", gamesService.playRockPaperScissors(3));
+        }
+        else if (pc.equals("Paper")) {
+            assertEquals("The winner is PC", gamesService.playRockPaperScissors(1));
+            assertEquals("It's a draw", gamesService.playRockPaperScissors(2));
+            assertEquals("The winner is Player", gamesService.playRockPaperScissors(3));
+        }
+        else if (pc.equals("Scissors")){
+            assertEquals("The winner is Player",gamesService.playRockPaperScissors(1));
+            assertEquals("The winner is PC",gamesService.playRockPaperScissors(2));
+            assertEquals("It's a draw",gamesService.playRockPaperScissors(3));
+        }
 
+    }
     @Test
     void playTowerOfHanoi() {
         assertEquals(0,gamesService.playTowerOfHanoi(0));
