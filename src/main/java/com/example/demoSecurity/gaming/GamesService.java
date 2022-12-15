@@ -76,4 +76,26 @@ public class GamesService {
     public int playTowerOfHanoi(int disks){
         return (int) (pow(2,disks)-1);
     }
+    public int playBowling(int[] rolls){
+        int[] rolled=new int[22];
+        for (int i=0;i<rolls.length;i++)
+            rolled[i]=rolls[i];
+        int score=0;
+        int thisBall=0;
+        for (int i=0;i<10;i++) {
+            if (rolled[thisBall]==10) { //strike
+                score += 10 + rolled[thisBall + 1] + rolled[thisBall + 2];
+                thisBall++;
+            }
+            else if (rolled[thisBall] + rolled[thisBall + 1] == 10) { //spare
+                score +=10+rolled[thisBall + 2];
+                thisBall+=2;
+            }
+            else {
+                score += rolled[thisBall] + rolled[thisBall + 1];
+                thisBall+=2;
+            }
+        }
+        return score;
+    }
 }
