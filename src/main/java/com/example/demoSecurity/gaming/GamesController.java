@@ -45,4 +45,12 @@ public class GamesController {
         appUserRepository.save(appUser);
         return score;
     }
+    @GetMapping(path = "/bowling")
+    public int playBowling(int[] rolls){
+        var appUser=appUserRepository.findById(gamesService.getAppUserId()).get();
+        int score=gamesService.playBowling(rolls);
+        appUser.setScore(appUser.getScore()+score);
+        appUserRepository.save(appUser);
+        return score;
+    }
 }
