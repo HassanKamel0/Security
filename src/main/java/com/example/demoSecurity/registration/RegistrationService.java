@@ -1,5 +1,4 @@
 package com.example.demoSecurity.registration;
-
 import com.example.demoSecurity.appuser.AppUser;
 import com.example.demoSecurity.appuser.AppUserRepository;
 import com.example.demoSecurity.appuser.AppUserRole;
@@ -12,9 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,9 +25,9 @@ public class RegistrationService {
     private final EmailSender emailSender;
     public String register(RegistrationRequest request) {
         boolean isValidEmail= emailValidator.test(request.getEmail());
-        if (!isValidEmail){ throw new IllegalStateException("Email is not valid");}
+        if (!isValidEmail) throw new IllegalStateException("Email is not valid");
         boolean userExists=appUserRepository.findByEmail(request.getEmail()).isPresent();
-        String token=new String();
+        String token;
         if (userExists) {
             AppUser user = appUserRepository.findByEmail(request.getEmail()).get();
             if (user.getEnabled())
@@ -45,8 +42,7 @@ public class RegistrationService {
                             request.getLastName(),
                             request.getEmail(),
                             request.getPassword(),
-                            AppUserRole.USER
-                    )
+                            AppUserRole.USER)
             );
         }
         String link="http://localhost:8080/api/v1/security/confirm?token="+token;
@@ -61,10 +57,8 @@ public class RegistrationService {
         if (confirmationToken.getConfirmedAt() != null)
             throw new IllegalStateException("Email already confirmed");
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
-
         if (expiredAt.isBefore(LocalDateTime.now()))
             throw new IllegalStateException("Token expired");
-
         confirmationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(confirmationToken.getAppUser().getEmail());
         return "Confirmed";
@@ -72,6 +66,7 @@ public class RegistrationService {
     public String login(LoginRequest request) {
         AppUser appUser=appUserRepository.findByEmail(request.getEmail()).get();
         if (appUserRepository.existsById(appUser.getId())) {
+            appUser.setLocked(true);
             gamesService.setAppUserId(appUser.getId());
             return "Login Done";
         }
@@ -146,6 +141,4 @@ public class RegistrationService {
                 "\n" +
                 "</div></div>";
     }
-
-
 }

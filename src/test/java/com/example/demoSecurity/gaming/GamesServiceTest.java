@@ -5,9 +5,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
@@ -56,7 +54,6 @@ class GamesServiceTest {
             assertEquals("The winner is PC",gamesService.playRockPaperScissors(2));
             assertEquals("It's a draw",gamesService.playRockPaperScissors(3));
         }
-
     }
     @Test
     void playTowerOfHanoi() {

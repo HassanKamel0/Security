@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -26,22 +25,23 @@ public class AppUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var appUser= appUserRepository.findByEmail(email).get();
         gamesService.setAppUserId(appUser.getId());
+        appUser.setLocked(true);
         return appUserRepository.findByEmail(email)
                 .orElseThrow(()->
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG,email)));
     }
     public String activateUser(AppUser appUser){
-        String token = sendConfirmationMail(appUser);
+        String token = setConfirmationMail(appUser);
         return token;
     }
     public String signUpUser(AppUser appUser){
         String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
-        String token = sendConfirmationMail(appUser);
+        String token = setConfirmationMail(appUser);
         return token;
     }
-    private String sendConfirmationMail(AppUser appUser) {
+    private String setConfirmationMail(AppUser appUser) {
         appUserRepository.save(appUser);
         String token=UUID.randomUUID().toString();
         ConfirmationToken confirmationToken=new ConfirmationToken(

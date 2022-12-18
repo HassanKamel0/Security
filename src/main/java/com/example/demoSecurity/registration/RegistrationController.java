@@ -1,8 +1,4 @@
 package com.example.demoSecurity.registration;
-
-import com.example.demoSecurity.appuser.AppUserRepository;
-import com.example.demoSecurity.gaming.GamesController;
-import com.example.demoSecurity.gaming.GamesService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

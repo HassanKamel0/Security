@@ -16,14 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AppUserService appUserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/api/v*/security/**")
                 .permitAll().antMatchers("/actuator/**")
-                .permitAll().anyRequest().authenticated().and()
-                .formLogin();
+                .permitAll().anyRequest().authenticated().and().formLogin();
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
