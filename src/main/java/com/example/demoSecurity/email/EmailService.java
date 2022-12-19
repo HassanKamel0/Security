@@ -19,8 +19,7 @@ import java.util.Map;
 public class EmailService implements EmailSender{
     private final static Logger LOGGER= LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender mailSender;
-    @Autowired
-    private final SpringTemplateEngine thymeleafTemplateEngine;
+    @Autowired private final SpringTemplateEngine thymeleafTemplateEngine;
     @Override
     @Async
     public void sendHtmlMessage(String to, String subject, String htmlBody) {

@@ -1,14 +1,15 @@
 package com.example.demoSecurity.gaming;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 import java.util.Random;
 import static java.lang.Math.pow;
 @Service
-@Getter
-@Setter
+@Data
 public class GamesService {
     private Long AppUserId;
+    private String pc;
     public int playDice(int[] arr){
         int sum,oneCounter,twoCounter,threeCounter,fourCounter,fiveCounter,sixCounter;
         sum=oneCounter=twoCounter=threeCounter=fourCounter=fiveCounter=sixCounter=0;
@@ -57,10 +58,10 @@ public class GamesService {
         return  (int) (50 * (myPower / hisDefence) * effectiveness);
     }
     public String playRockPaperScissors(int choice) {
-        String result = "";
+        String result;
         String[] options = {"Rock", "Paper", "Scissors"};
         String player = options[choice - 1];
-        String pc = options[new Random().nextInt(options.length)];
+        pc = options[new Random().nextInt(options.length)];
         if (player == pc)
             return "It's a draw";
         else if (player == "Rock")
@@ -95,5 +96,8 @@ public class GamesService {
             }
         }
         return score;
+    }
+    public String getPc() {
+        return pc;
     }
 }

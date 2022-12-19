@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 @Repository
-@Transactional(readOnly = true)
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken,Long> {
     Optional<ConfirmationToken> findByToken(String token);
     @Transactional

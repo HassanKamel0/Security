@@ -18,8 +18,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class RegistrationService {
-    @Autowired
-    private final AppUserService appUserService;
+    @Autowired private final AppUserService appUserService;
     private final GamesService gamesService;
     private final AppUserRepository appUserRepository;
     private final EmailValidator emailValidator;

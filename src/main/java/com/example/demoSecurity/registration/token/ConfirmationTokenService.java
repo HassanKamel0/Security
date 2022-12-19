@@ -8,11 +8,8 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ConfirmationTokenService {
-    @Autowired
-    private final ConfirmationTokenRepository confirmationTokenRepository;
-    public void saveConfirmationToken(ConfirmationToken token){
-        confirmationTokenRepository.save(token);
-    }
+    @Autowired private final ConfirmationTokenRepository confirmationTokenRepository;
+    public void saveConfirmationToken(ConfirmationToken token){confirmationTokenRepository.save(token);}
     public Optional<ConfirmationToken> getToken(String token) {
         return confirmationTokenRepository.findByToken(token);
     }

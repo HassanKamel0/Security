@@ -1,8 +1,5 @@
 package com.example.demoSecurity.appuser;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,8 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
@@ -43,35 +39,23 @@ public class AppUser implements UserDetails {
         return Collections.singletonList(authority);
     }
     @Override
-    public String getPassword() {
-        return password;
-    }
-
+    public String getPassword() {return password;}
     @Override
-    public String getUsername() {
-        return email;
-    }
-
-    public String getfirstName() {
-        return firstName;
-    }
+    public String getUsername() {return email;}
+    public String getfirstName() {return firstName;}
     public String getLastName() {return lastName;}
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
         return !locked;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
     @Override
     public boolean isEnabled() {
         return enabled;

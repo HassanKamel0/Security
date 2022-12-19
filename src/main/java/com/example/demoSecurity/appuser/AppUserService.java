@@ -16,11 +16,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG ="User with email %s not found";
-    @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final GamesService gamesService;
-    private final AppUserRepository appUserRepository;
+    @Autowired private final AppUserRepository appUserRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var appUser= appUserRepository.findByEmail(email).get();
