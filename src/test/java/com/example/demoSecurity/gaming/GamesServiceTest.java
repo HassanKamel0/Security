@@ -16,7 +16,6 @@ import static org.mockito.Mockito.when;
 class GamesServiceTest {
     @InjectMocks
     GamesService gamesService;
-
     @Test
     void playDice() {
         assertEquals(0, gamesService.playDice(new int[]{2, 3, 4, 6, 2}));
@@ -27,7 +26,6 @@ class GamesServiceTest {
         assertEquals(1150, gamesService.playDice(new int[]{1, 1, 1, 1, 5}));
         assertEquals(300, gamesService.playDice(new int[]{3, 3, 3, 3, 3}));
     }
-
     @Test
     void playPokemon() {
         assertEquals(25, gamesService.playPokemon("fire", "water", 100, 100));
@@ -37,27 +35,6 @@ class GamesServiceTest {
         assertEquals(50, gamesService.playPokemon("electric", "fire", 100, 100));
         assertEquals(100, gamesService.playPokemon("grass", "water", 100, 100));
     }
-
-    //    @Test
-//    void playRockPaperScissors() {
-//       // String[] options = {"Rock", "Paper", "Scissors"};
-//
-//        if (pc.equals("Rock")) {
-//            assertEquals("It's a draw", gamesService.playRockPaperScissors(1));
-//            assertEquals("The winner is PC", gamesService.playRockPaperScissors(2));
-//            assertEquals("The winner is Player", gamesService.playRockPaperScissors(3));
-//        }
-//        else if (pc.equals("Paper")) {
-//            assertEquals("The winner is PC", gamesService.playRockPaperScissors(1));
-//            assertEquals("It's a draw", gamesService.playRockPaperScissors(2));
-//            assertEquals("The winner is Player", gamesService.playRockPaperScissors(3));
-//        }
-//        else if (pc.equals("Scissors")){
-//            assertEquals("The winner is Player",gamesService.playRockPaperScissors(1));
-//            assertEquals("The winner is PC",gamesService.playRockPaperScissors(2));
-//            assertEquals("It's a draw",gamesService.playRockPaperScissors(3));
-//        }
-//    }
     @Test
     void playTowerOfHanoi() {
         assertEquals(0, gamesService.playTowerOfHanoi(0));
