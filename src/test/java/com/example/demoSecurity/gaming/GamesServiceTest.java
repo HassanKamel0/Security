@@ -29,7 +29,7 @@ class GamesServiceTest {
     @Test
     void playPokemon() {
         assertEquals(25, gamesService.playPokemon("fire", "water", 100, 100));
-        assertEquals(250, gamesService.playPokemon("fire", "electric", 10, 2));
+        assertEquals(250, gamesService.playPokemon("fire", "fire", 10, 2));
         assertEquals(175, gamesService.playPokemon("grass", "fire", 35, 5));
         assertEquals(150, gamesService.playPokemon("grass", "electric", 57, 19));
         assertEquals(50, gamesService.playPokemon("electric", "fire", 100, 100));

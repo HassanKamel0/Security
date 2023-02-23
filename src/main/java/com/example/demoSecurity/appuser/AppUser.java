@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
