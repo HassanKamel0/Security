@@ -62,14 +62,14 @@ public class GamesService {
         String[] options = {"Rock", "Paper", "Scissors"};
         String player = options[choice - 1];
         pc = options[new Random().nextInt(options.length)];
-        if (player == pc)
+        if (player.equals(pc))
             return "It's a draw";
-        else if (player == "Rock")
-            result = (pc == "Paper") ? "PC" : "Player";
-        else if (player == "Paper")
-            result = (pc == "Scissors") ? "PC" : "Player";
+        else if (player.toLowerCase().equals("rock"))
+            result= (pc.toLowerCase().equals("paper")) ? "PC" : "Player";
+        else if (player.toLowerCase().equals("paper"))
+            result= (pc.toLowerCase().equals("scissors")) ? "PC" : "Player";
         else
-            result = (pc == "Rock") ? "PC" : "Player";
+            result= (pc.toLowerCase().equals("rock")) ? "PC" : "Player";
         return "The winner is " + result;
     }
     public int playTowerOfHanoi(int disks){
